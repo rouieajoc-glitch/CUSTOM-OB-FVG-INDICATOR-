@@ -28,7 +28,8 @@ def _get(url, params):
 
 
 def _c(r):
-    return {"t": int(r[0]), "o": float(r[1]), "h": float(r[2]), "l": float(r[3]), "c": float(r[4])}
+    return {"t": int(r[0]), "o": float(r[1]), "h": float(r[2]), "l": float(r[3]), "c": float(r[4]),
+            "v": float(r[5]) if len(r) > 5 else 0.0}
 
 
 def _binance(host, symbol, interval, total):
@@ -48,7 +49,7 @@ def _binance(host, symbol, interval, total):
 
 
 def _bybit(symbol, interval, total):
-    iv = {"15m": "15", "1h": "60", "4h": "240", "1d": "D"}[interval]
+    iv = {"15m": "15", "1h": "60", "4h": "240", "12h": "720", "1d": "D"}[interval]
     out, end = [], None
     while len(out) < total:
         p = {"category": "linear", "symbol": symbol, "interval": iv, "limit": 1000}
