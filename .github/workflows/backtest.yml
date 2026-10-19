@@ -2,10 +2,13 @@ name: Backtest OB FVG
 on:
   workflow_dispatch:
     inputs:
-      symbol:
-        default: BTCUSDT
-      interval:
-        default: 4h
+      symbols:
+        default: BTCUSDT,ETHUSDT,SOLUSDT
+      intervals:
+        default: 1h,4h,1d
+      null_test:
+        description: "type null to run on random fake data instead of real data"
+        default: "real"
 jobs:
   run:
     runs-on: ubuntu-latest
@@ -16,9 +19,10 @@ jobs:
           python-version: "3.11"
       - name: Run backtest
         env:
-          SYMBOL: ${{ inputs.symbol }}
-          INTERVAL: ${{ inputs.interval }}
-        run: python backtest.py "$SYMBOL" "$INTERVAL" 2200 | tee results.txt
+          SYMBOLS: ${{ inputs.symbols }}
+          INTERVALS: ${{ inputs.intervals }}
+          MODE: ${{ inputs.null_test }}
+        run: python backtest.py "$SYMBOLS" "$INTERVALS" "$MODE" | tee results.txt
       - uses: actions/upload-artifact@v4
         with:
           name: results
