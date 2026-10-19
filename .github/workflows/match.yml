@@ -1,0 +1,26 @@
+name: Match CoinAnk
+on:
+  workflow_dispatch:
+    inputs:
+      symbol:
+        default: BTCUSDT
+      intervals:
+        default: 1h,4h,1d
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Compare with CoinAnk
+        env:
+          COINANK_API_KEY: ${{ secrets.COINANK_API_KEY }}
+          SYMBOL: ${{ inputs.symbol }}
+          INTERVALS: ${{ inputs.intervals }}
+        run: python match_coinank.py "$SYMBOL" "$INTERVALS" | tee match_results.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: match-results
+          path: match_results.txt
