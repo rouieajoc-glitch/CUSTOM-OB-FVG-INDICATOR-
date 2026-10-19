@@ -14,7 +14,7 @@ from datetime import datetime, timezone
 
 from ob_fvg import fetch_candles, find_zones, atr_series
 
-STEP = {"15m": 900000, "1h": 3600000, "4h": 14400000, "1d": 86400000}
+STEP = {"15m": 900000, "1h": 3600000, "4h": 14400000, "12h": 43200000, "1d": 86400000}
 SMC_URL = "https://open-api.coinank.com/api/indicator/smc"
 
 
@@ -119,13 +119,14 @@ def compare(symbol, iv, out):
 
 
 if __name__ == "__main__":
-    symbol = sys.argv[1] if len(sys.argv) > 1 else "BTCUSDT"
+    symbols = (sys.argv[1] if len(sys.argv) > 1 else "BTCUSDT").split(",")
     intervals = (sys.argv[2] if len(sys.argv) > 2 else "1h,4h,1d").split(",")
     out = []
-    for iv in intervals:
-        try:
-            compare(symbol, iv, out)
-        except Exception as e:
-            out.append(f"{symbol} {iv}: FAILED ({e})")
-        out.append("")
+    for symbol in symbols:
+        for iv in intervals:
+            try:
+                compare(symbol.strip(), iv.strip(), out)
+            except Exception as e:
+                out.append(f"{symbol} {iv}: FAILED ({e})")
+            out.append("")
     print("\n".join(out))
