@@ -3,9 +3,9 @@ on:
   workflow_dispatch:
     inputs:
       symbol:
-        default: BTCUSDT
+        default: BTCUSDT,ETHUSDT,SOLUSDT
       intervals:
-        default: 4h,1d
+        default: 1h,4h,12h,1d
 jobs:
   run:
     runs-on: ubuntu-latest
@@ -25,4 +25,6 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: swing-results
-          path: swing_results.txt
+          path: |
+            swing_results.txt
+            fvg_rows.csv 
