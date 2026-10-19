@@ -1,0 +1,26 @@
+name: Match Swing
+on:
+  workflow_dispatch:
+    inputs:
+      symbol:
+        default: BTCUSDT
+      intervals:
+        default: 4h,1d
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Calibrate swings OB FVG
+        env:
+          COINANK_API_KEY: ${{ secrets.COINANK_API_KEY }}
+          SYMBOL: ${{ inputs.symbol }}
+          INTERVALS: ${{ inputs.intervals }}
+        run: python match_fvg3.py "$SYMBOL" "$INTERVALS" | tee swing_results.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: swing-results
+          path: swing_results.txt
