@@ -16,6 +16,7 @@ OB_MOVE = 1.5
 FVG_MIN = 0.5
 CONFIRM = 3
 HORIZON = 6  # candles to wait for a reaction after first touch
+MAX_WAIT = 100  # candles a zone may wait for its first touch before it counts as untouched
 
 
 # ---------- data ----------
@@ -64,6 +65,9 @@ def _bybit(symbol, interval, total):
     return out[-total:]
 
 
+_PREFERRED = None
+
+
 def fetch_candles(symbol="BTCUSDT", interval="4h", total=2200):
     """Tries Binance, then Binance's data mirror, then Bybit. Drops the unfinished last candle."""
     sources = [
@@ -71,10 +75,14 @@ def fetch_candles(symbol="BTCUSDT", interval="4h", total=2200):
         ("binance-data", lambda: _binance("https://data-api.binance.vision", symbol, interval, total)),
         ("bybit", lambda: _bybit(symbol, interval, total)),
     ]
+    global _PREFERRED
+    if _PREFERRED:
+        sources.sort(key=lambda s: s[0] != _PREFERRED)
     for name, fn in sources:
         try:
             cs = fn()
             if len(cs) > 100:
+                _PREFERRED = name
                 print(f"data source: {name} ({len(cs)} candles)")
                 return cs[:-1]
         except Exception as e:  # blocked region, rate limit, etc.
@@ -133,13 +141,13 @@ def find_zones(cs, ob_move=OB_MOVE, fvg_min=FVG_MIN, confirm=CONFIRM):
     return zones
 
 
-def evaluate(cs, z, horizon=HORIZON):
+def evaluate(cs, z, horizon=HORIZON, max_wait=MAX_WAIT):
     """First touch after the zone is known, then did price react (close away by 1x zone size)
     or break (close through the zone) within `horizon` candles? Uses closes only."""
     size = z["top"] - z["bottom"]
     bull = z["side"] == "bull"
     z["touch"], z["outcome"], z["filled"] = None, "untouched", False
-    for j in range(z["known"] + 1, len(cs)):
+    for j in range(z["known"] + 1, min(len(cs), z["known"] + 1 + max_wait)):
         c = cs[j]
         if (c["l"] <= z["top"]) if bull else (c["h"] >= z["bottom"]):
             z["touch"], z["outcome"] = j, "no_reaction"
