@@ -19,6 +19,26 @@ META = {"sym", "iv", "start", "i", "up", "bottom", "top", "label", "kept", "age"
 POOL_SKIP = {"pos_in_window", "since_prev_gap", "c1_body_pct", "c3_body_pct"}
 
 
+def pen_features(cs, c):
+    """How far later candles have already pushed back into the gap (0 = untouched, 1 = fully covered)."""
+    i, b, t = c["i"], c["bottom"], c["top"]
+    gap = t - b
+    later = cs[i + 1:]
+    if not later or gap <= 0:
+        return {"pen_max": 0.0, "touches": 0, "first_touch_delay": -1, "dist_now_atr": 0.0}
+    if c["up"]:   # price returns from above, hits top first
+        depth = [max(0.0, min(1.0, (t - x["l"]) / gap)) for x in later]
+        inside = [x["l"] <= t for x in later]
+    else:         # down gap: price returns from below, hits bottom first
+        depth = [max(0.0, min(1.0, (x["h"] - b) / gap)) for x in later]
+        inside = [x["h"] >= b for x in later]
+    first = next((n for n, v in enumerate(inside) if v), -1)
+    a = max(1e-9, statistics.mean(x["h"] - x["l"] for x in cs[max(0, i - 14):i + 1]))
+    last = cs[-1]["c"]
+    dist = (last - t) / a if c["up"] else (b - last) / a
+    return {"pen_max": max(depth), "touches": sum(inside), "first_touch_delay": first, "dist_now_atr": dist}
+
+
 def collect(symbol, iv):
     data = coinank(symbol, iv)
     step = STEP[iv]
@@ -38,13 +58,22 @@ def collect(symbol, iv):
             if k not in kept and c["start"] == ti and near(c["bottom"], o["low"], TOL) and near(c["top"], o["high"], TOL):
                 kept[k] = o.get("direction")
                 break
+    misses = []
+    for o in theirs:
+        ti = int((o["ts"] - ts0) // step)
+        if not any(c["start"] == ti and near(c["bottom"], o["low"], TOL) and near(c["top"], o["high"], TOL) for c in cands):
+            nb = min(cands, key=lambda c: abs(c["start"] - ti), default=None)
+            misses.append(f"  MISS {symbol} {iv}: theirs start {ti} low {o['low']} high {o['high']} dir {o.get('direction')}"
+                          + (f" | nearest ours start {nb['start']} bottom {nb['bottom']} top {nb['top']}" if nb else ""))
     rows = []
     for k, c in enumerate(cands):
+        pen = pen_features(cs, c)
         r = dict(c)
+        r.update(pen)
         r.update(sym=symbol, iv=iv, kept=int(k in kept), their_dir=kept.get(k), n_cs=len(cs),
                  age=len(cs) - c["start"], has_v=int("v" in cs[0]))
         rows.append(r)
-    return rows, len(theirs)
+    return rows, len(theirs), misses
 
 
 def feats_of(rows):
@@ -128,10 +157,11 @@ if __name__ == "__main__":
     for sym in symbols:
         for iv in ivs:
             try:
-                rows, n_theirs = collect(sym.strip(), iv.strip())
+                rows, n_theirs, misses = collect(sym.strip(), iv.strip())
                 P = sum(r["kept"] for r in rows)
                 out.append(f"{sym} {iv}: candles {rows[0]['n_cs'] if rows else 0} | CoinAnk {n_theirs} | ours {len(rows)} | "
                            f"matched {P}/{n_theirs} | volume {bool(rows and rows[0]['has_v'])}")
+                out += misses
                 if P:
                     fe = feats_of(rows)
                     topn_test(rows, fe, out)
