@@ -1,0 +1,25 @@
+name: Backtest OB FVG
+on:
+  workflow_dispatch:
+    inputs:
+      symbol:
+        default: BTCUSDT
+      interval:
+        default: 4h
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Run backtest
+        env:
+          SYMBOL: ${{ inputs.symbol }}
+          INTERVAL: ${{ inputs.interval }}
+        run: python backtest.py "$SYMBOL" "$INTERVAL" 2200 | tee results.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: results
+          path: results.txt
