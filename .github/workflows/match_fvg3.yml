@@ -14,12 +14,14 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
+      - name: Install deps
+        run: pip install scikit-learn numpy
       - name: Calibrate swings OB FVG
         env:
           COINANK_API_KEY: ${{ secrets.COINANK_API_KEY }}
           SYMBOL: ${{ inputs.symbol }}
           INTERVALS: ${{ inputs.intervals }}
-        run: python match_fvg3.py "$SYMBOL" "$INTERVALS" | tee swing_results.txt
+        run: python match_fvg4.py "$SYMBOL" "$INTERVALS" | tee swing_results.txt
       - uses: actions/upload-artifact@v4
         with:
           name: swing-results
