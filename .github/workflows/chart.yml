@@ -7,13 +7,13 @@ on:
         default: BTCUSDT,ETHUSDT,SOLUSDT
       intervals:
         description: Timeframes (FVGs are drawn on 4h and up only)
-        default: 4h,1d
+        default: 30m,1h,4h,1d
       bars:
         description: Candles shown on the chart
         default: "150"
   # To send automatically every 4 hours, remove the # on the next 2 lines:
-  # schedule:
-  #   - cron: "5 */4 * * *"
+  schedule:
+    - cron: "5 */4 * * *"
 jobs:
   chart:
     runs-on: ubuntu-latest
