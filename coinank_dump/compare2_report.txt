@@ -1,14 +1,55 @@
 ===== 4H (binance-futures-archive, 594 candles) =====
--- swings (n=5) tie rules --
-  L strict,R loose: 80/0/2
-  both strict: 80/0/2
-  both loose: 80/0/2
-  L loose,R strict: 80/0/2
-[4h] failed: max() iterable argument is empty
+-- swings (n=5), edge handling --
+  no edges: 80/0/2
+  start edge: 80/0/2
+  end edge: 82/0/0
+  both edges: 82/0/0
+-- FVG --
+  kept 16, my total 109
+  sample (i0, dir, barCount, fillIdx): (3,1,10,13), (12,0,17,29), (37,0,10,47), (72,1,14,86), (168,0,3,171)
+  (fillIdx - i0) - barCount: {0: 12}
+  fill rule touch: fillIdx match 5/16, rule says unfilled 3
+  fill rule mid: fillIdx match 8/16, rule says unfilled 4
+  fill rule full_wick: fillIdx match 16/16, rule says unfilled 4
+  fill rule full_close: fillIdx match 10/16, rule says unfilled 4
+  i0 range 3..519; excluded in range 80
+  width min/med/max kept 0.260/0.986/5.106% | excluded 0.002/0.242/1.476%
+  filled (touch): kept 13/16, excluded 72/80
+  filled (full_wick): kept 12/16, excluded 71/80
+-- breakers --
+  breakerBearish: 32 | also in bearishOB: 32
+    rule wick: 32/2/0
+    rule close: 32/0/0
+    rule body: 32/0/0
+  breakerBullish: 25 | also in bullishOB: 25
+    rule wick: 25/6/0
+    rule close: 25/0/0
+    rule body: 25/0/0
+
 ===== 1D (binance-futures-archive, 175 candles) =====
--- swings (n=5) tie rules --
-  L strict,R loose: 19/0/1
-  both strict: 19/0/1
-  both loose: 19/0/1
-  L loose,R strict: 19/0/1
-[1d] failed: min() iterable argument is empty
+-- swings (n=5), edge handling --
+  no edges: 19/0/1
+  start edge: 19/0/1
+  end edge: 20/0/0
+  both edges: 20/0/0
+-- FVG --
+  kept 4, my total 34
+  sample (i0, dir, barCount, fillIdx): (45,1,80,125), (123,0,50,None), (125,0,50,None), (172,1,10,None)
+  (fillIdx - i0) - barCount: {0: 1}
+  fill rule touch: fillIdx match 2/4, rule says unfilled 2
+  fill rule mid: fillIdx match 2/4, rule says unfilled 2
+  fill rule full_wick: fillIdx match 4/4, rule says unfilled 3
+  fill rule full_close: fillIdx match 4/4, rule says unfilled 3
+  i0 range 45..172; excluded in range 23
+  width min/med/max kept 1.899/4.458/5.878% | excluded 0.061/0.357/4.735%
+  filled (touch): kept 2/4, excluded 21/23
+  filled (full_wick): kept 1/4, excluded 20/23
+-- breakers --
+  breakerBearish: 8 | also in bearishOB: 8
+    rule wick: 8/0/0
+    rule close: 8/0/0
+    rule body: 8/0/0
+  breakerBullish: 4 | also in bullishOB: 4
+    rule wick: 4/1/0
+    rule close: 4/0/0
+    rule body: 4/0/0
