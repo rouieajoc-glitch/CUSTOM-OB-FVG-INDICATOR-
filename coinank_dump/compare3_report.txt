@@ -1,0 +1,37 @@
+===== 4H (binance-futures-archive) =====
+population i0 3..519: 96 FVGs, kept 16; after last kept: 13
+single feature (best F1, threshold, tp/fp/fn, kept min, excluded max):
+  gap % of price: F1 0.73 thr 0.860 (11/3/5) kept>=0.260 excl<=1.476
+  gap / ATR14: F1 0.67 thr 0.613 (13/10/3) kept>=0.401 excl<=1.306
+  mid range / ATR14: F1 0.64 thr 2.406 (9/3/7) kept>=1.041 excl<=2.558
+  mid body / ATR14: F1 0.63 thr 1.427 (12/10/4) kept>=0.743 excl<=2.091
+  mid vol / avg20: F1 0.62 thr 3.004 (10/6/6) kept>=0.731 excl<=3.595
+  gap / mid body: F1 0.60 thr 0.506 (16/21/0) kept>=0.509 excl<=0.858
+  mid body %: F1 0.57 thr 1.267 (12/14/4) kept>=0.441 excl<=2.454
+  lux: body% / cum mean: F1 0.57 thr 2.829 (12/14/4) kept>=1.060 excl<=5.548
+  lux full (dir+close beyond): F1 0.57 thr 2.829 (12/14/4) kept>=1.060 excl<=5.548
+  mid vol / avg all: F1 0.56 thr 2.912 (9/7/7) kept>=0.585 excl<=4.073
+  mid body / range: F1 0.46 thr 0.679 (13/28/3) kept>=0.568 excl<=0.907
+best AND of two (F1, thr1, thr2, tp/fp/fn):
+  gap / ATR14 >= 0.562 AND mid vol / avg20 >= 2.306: F1 0.80 (12/2/4)
+  gap % of price >= 0.816 AND mid vol / avg20 >= 2.466: F1 0.79 (11/1/5)
+  gap % of price >= 0.644 AND mid body / ATR14 >= 1.427: F1 0.77 (12/3/4)
+
+===== 1D (binance-futures-archive) =====
+population i0 45..172: 27 FVGs, kept 4; after last kept: 0
+single feature (best F1, threshold, tp/fp/fn, kept min, excluded max):
+  mid vol / avg20: F1 0.75 thr 2.655 (3/1/1) kept>=1.181 excl<=2.991
+  mid vol / avg all: F1 0.75 thr 2.229 (3/1/1) kept>=1.111 excl<=2.961
+  mid body / ATR14: F1 0.75 thr 2.067 (3/1/1) kept>=1.004 excl<=2.146
+  mid body %: F1 0.75 thr 6.195 (3/1/1) kept>=2.603 excl<=6.698
+  lux: body% / cum mean: F1 0.75 thr 4.380 (3/1/1) kept>=1.876 excl<=4.659
+  lux full (dir+close beyond): F1 0.75 thr 4.380 (3/1/1) kept>=1.876 excl<=4.659
+  gap / mid body: F1 0.73 thr 0.563 (4/3/0) kept>=0.586 excl<=0.816
+  gap / ATR14: F1 0.73 thr 0.645 (4/3/0) kept>=0.695 excl<=1.597
+  mid range / ATR14: F1 0.67 thr 2.271 (3/2/1) kept>=1.287 excl<=2.592
+  gap % of price: F1 0.67 thr 1.663 (4/4/0) kept>=1.899 excl<=4.735
+  mid body / range: F1 0.50 thr 0.730 (4/8/0) kept>=0.731 excl<=0.937
+best AND of two (F1, thr1, thr2, tp/fp/fn):
+  mid vol / avg20 >= 2.190 AND mid body / ATR14 >= 2.067: F1 0.86 (3/0/1)
+  mid vol / avg20 >= 2.190 AND mid body % >= 5.926: F1 0.86 (3/0/1)
+  mid vol / avg20 >= 2.190 AND lux: body% / cum mean >= 4.181: F1 0.86 (3/0/1)
