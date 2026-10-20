@@ -1,0 +1,35 @@
+===== 4H (binance-futures-archive) =====
+n=5 close events: idx dir mine/CoinAnk (B=bos C=choch -=none) s=swing idx broken
+  38U B/B s32 | 48U B/C s40 | 94D C/C s73
+  108U C/C s102 | 115D C/- s105 | 169U C/C s163
+  175D C/C s166 | 197D B/B s188 | 219U C/C s187
+  229U B/B s223 | 262U B/- s240 | 284D C/- s271
+  312D B/- s297 | 319U C/C s302 | 339U B/- s332
+  347D C/C s325 | 361D B/C s349 | 392D B/- s382
+  409U C/C s387 | 426U B/C s415 | 467D C/C s451
+  491U C/C s481 | 520D C/C s512 | 547U C/B s534
+  568D C/C s556
+-- FVGs at n=3 close breaks: 28, kept among them 14 of 16 --
+  gap / mid body: F1 0.80 thr 0.497 (14/7/0) kept>=0.509 excl<=0.835
+  gap % of price: F1 0.80 thr 0.590 (12/4/2) kept>=0.260 excl<=1.073
+  mid body %: F1 0.79 thr 1.250 (11/3/3) kept>=0.441 excl<=2.187
+  gap / ATR14: F1 0.77 thr 0.612 (12/5/2) kept>=0.401 excl<=1.131
+  lux: body% / cum mean: F1 0.76 thr 2.758 (11/4/3) kept>=1.060 excl<=4.695
+  gap / mid body >= 0.497 AND gap / ATR14 >= 0.401: F1 0.85 (14/5/0)
+  gap / mid body >= 0.482 AND mid body % >= 1.250: F1 0.85 (11/1/3)
+-- FVGs at n=4 close breaks: 25, kept among them 13 of 16 --
+  gap % of price: F1 0.85 thr 0.590 (11/2/2) kept>=0.260 excl<=1.073
+  gap / mid body: F1 0.81 thr 0.497 (13/6/0) kept>=0.509 excl<=0.820
+  mid body / range: F1 0.79 thr 0.604 (13/7/0) kept>=0.628 excl<=0.853
+  gap / ATR14: F1 0.79 thr 0.612 (11/4/2) kept>=0.401 excl<=1.131
+  mid body %: F1 0.77 thr 1.250 (10/3/3) kept>=0.441 excl<=1.906
+  gap % of price >= 0.590 AND gap / ATR14 >= 0.611: F1 0.88 (11/1/2)
+  gap / mid body >= 0.497 AND mid body / range >= 0.563: F1 0.87 (13/4/0)
+
+===== 1D (binance-futures-archive) =====
+n=5 close events: idx dir mine/CoinAnk (B=bos C=choch -=none) s=swing idx broken
+  17U B/C s10 | 40D C/C s12 | 88U C/B s80
+  124U B/C s114 | 151D C/- s138 | 157U C/- s139
+  174D C/- s164
+-- FVGs at n=3 close breaks: 4, kept among them 1 of 4 --
+-- FVGs at n=4 close breaks: 4, kept among them 1 of 4 --
