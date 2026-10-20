@@ -1,0 +1,14 @@
+===== 4H (binance-futures-archive, 594 candles) =====
+-- swings (n=5) tie rules --
+  L strict,R loose: 80/0/2
+  both strict: 80/0/2
+  both loose: 80/0/2
+  L loose,R strict: 80/0/2
+[4h] failed: max() iterable argument is empty
+===== 1D (binance-futures-archive, 175 candles) =====
+-- swings (n=5) tie rules --
+  L strict,R loose: 19/0/1
+  both strict: 19/0/1
+  both loose: 19/0/1
+  L loose,R strict: 19/0/1
+[1d] failed: min() iterable argument is empty
