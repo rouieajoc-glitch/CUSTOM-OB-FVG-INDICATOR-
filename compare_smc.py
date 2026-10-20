@@ -181,7 +181,68 @@ def check_interval(interval):
         log(f"  (my dir, coinank dir): {dict(dirs)}")
     log()
 
+import io
+import zipfile
+from datetime import datetime, timezone, timedelta
 
+_spot_fetch = fetch_candles  # old version, kept as fallback
+
+
+def _archive_rows(url):
+    try:
+        r = requests.get(url, timeout=30)
+        if r.status_code != 200:
+            return None
+        z = zipfile.ZipFile(io.BytesIO(r.content))
+        text = z.read(z.namelist()[0]).decode()
+    except Exception:
+        return None
+    rows = []
+    for line in text.splitlines():
+        p = line.split(",")
+        if not p or not p[0].isdigit():
+            continue
+        ts = int(p[0])
+        if ts > 10**14:
+            ts //= 1000
+        rows.append({"ts": ts, "o": float(p[1]), "h": float(p[2]),
+                     "l": float(p[3]), "c": float(p[4])})
+    return rows
+
+
+def fetch_candles(interval, start_ms, count):
+    """Binance FUTURES candles from the public data.binance.vision archive."""
+    base = "https://data.binance.vision/data/futures/um"
+    end_ms = start_ms + (count - 1) * STEP[interval]
+    start = datetime.fromtimestamp(start_ms / 1000, timezone.utc)
+    end = datetime.fromtimestamp(end_ms / 1000, timezone.utc)
+    today = datetime.now(timezone.utc).date()
+    got = {}
+    y, m = start.year, start.month
+    while (y, m) <= (end.year, end.month):
+        name = f"BTCUSDT-{interval}-{y}-{m:02d}"
+        rows = None
+        if (y, m) < (today.year, today.month):
+            rows = _archive_rows(f"{base}/monthly/klines/BTCUSDT/{interval}/{name}.zip")
+        if rows is None:
+            d = datetime(y, m, 1).date()
+            while d.month == m:
+                if d < today:
+                    url = f"{base}/daily/klines/BTCUSDT/{interval}/BTCUSDT-{interval}-{d.isoformat()}.zip"
+                    for x in _archive_rows(url) or []:
+                        got[x["ts"]] = x
+                d += timedelta(days=1)
+        else:
+            for x in rows:
+                got[x["ts"]] = x
+        m += 1
+        if m == 13:
+            y, m = y + 1, 1
+    candles = [got[t] for t in sorted(got) if start_ms <= t <= end_ms]
+    if len(candles) >= count * 0.9:
+        return "binance-futures-archive", candles
+    log(f"  futures archive incomplete ({len(candles)}/{count}), using spot")
+    return _spot_fetch(interval, start_ms, count)
 def main():
     for iv in INTERVALS:
         try:
