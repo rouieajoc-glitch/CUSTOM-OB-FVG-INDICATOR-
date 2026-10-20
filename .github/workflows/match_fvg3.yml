@@ -23,7 +23,7 @@ jobs:
           INTERVALS: ${{ inputs.intervals }}
         run: |
           python backtest_fvg.py "$SYMBOL" "$INTERVALS" | tee swing_results.txt
-          python match_coinank.py "$SYMBOL" "$INTERVALS" | tee ob_results.txt
+          python match_ob2.py "$SYMBOL" "$INTERVALS" | tee ob_results.txt
       - uses: actions/upload-artifact@v4
         with:
           name: swing-results
