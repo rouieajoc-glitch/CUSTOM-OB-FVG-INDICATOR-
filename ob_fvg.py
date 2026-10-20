@@ -32,13 +32,13 @@ def _c(r):
             "v": float(r[5]) if len(r) > 5 else 0.0}
 
 
-def _binance(host, symbol, interval, total):
+def _binance(host, symbol, interval, total, path="/api/v3/klines"):
     out, end = [], None
     while len(out) < total:
         p = {"symbol": symbol, "interval": interval, "limit": 1000}
         if end:
             p["endTime"] = end
-        rows = _get(host + "/api/v3/klines", p)
+        rows = _get(host + path, p)
         if not rows:
             break
         out = [_c(r) for r in rows] + out
@@ -72,6 +72,7 @@ _PREFERRED = None
 def fetch_candles(symbol="BTCUSDT", interval="4h", total=2200):
     """Tries Binance, then Binance's data mirror, then Bybit. Drops the unfinished last candle."""
     sources = [
+        ("binance-futures", lambda: _binance("https://fapi.binance.com", symbol, interval, total, "/fapi/v1/klines")),
         ("binance", lambda: _binance("https://api.binance.com", symbol, interval, total)),
         ("binance-data", lambda: _binance("https://data-api.binance.vision", symbol, interval, total)),
         ("bybit", lambda: _bybit(symbol, interval, total)),
