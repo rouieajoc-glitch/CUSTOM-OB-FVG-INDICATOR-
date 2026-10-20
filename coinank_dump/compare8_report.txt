@@ -1,0 +1,27 @@
+===== 4H (binance-futures-archive) =====
+population: gap >= 0.5 x mid body: 41 of 109 FVGs; kept 16 of 16
+  mid range / max range prev 5: F1 0.85 thr 1.390 (14/3/2) kept>=0.452 excl<=1.878
+  mid range / max range prev 10: F1 0.79 thr 1.188 (13/4/3) kept>=0.452 excl<=1.878
+  mid vol / avg20: F1 0.77 thr 2.318 (12/3/4) kept>=0.731 excl<=3.595
+  break of n=3 swing at mid: F1 0.76 thr 0.500 (14/7/2) kept>=0.000 excl<=1.000
+  mid body / ATR14: F1 0.75 thr 1.352 (12/4/4) kept>=0.743 excl<=2.091
+  mid body %: F1 0.75 thr 1.261 (12/4/4) kept>=0.441 excl<=2.033
+  lux: body% / cum mean: F1 0.75 thr 2.758 (12/4/4) kept>=1.060 excl<=4.602
+  lux full (dir+close beyond): F1 0.75 thr 2.758 (12/4/4) kept>=1.060 excl<=4.602
+  mid range / max range prev 5 >= 1.281 AND break of n=3 swing at mid >= 0.500: F1 0.87 (13/1/3)
+  mid range / max range prev 5 >= 1.390 AND mid range / max range prev 10 >= 0.564: F1 0.85 (14/3/2)
+  mid range / max range prev 5 >= 1.390 AND mid vol / avg20 >= 0.731: F1 0.85 (14/3/2)
+
+===== 1D (binance-futures-archive) =====
+population: gap >= 0.5 x mid body: 12 of 34 FVGs; kept 4 of 4
+  mid vol / avg20: F1 0.86 thr 2.655 (3/0/1) kept>=1.181 excl<=2.581
+  mid vol / avg all: F1 0.86 thr 2.229 (3/0/1) kept>=1.111 excl<=2.226
+  mid body / ATR14: F1 0.75 thr 2.067 (3/1/1) kept>=1.004 excl<=2.146
+  mid body %: F1 0.75 thr 6.195 (3/1/1) kept>=2.603 excl<=6.698
+  lux: body% / cum mean: F1 0.75 thr 4.380 (3/1/1) kept>=1.876 excl<=4.659
+  lux full (dir+close beyond): F1 0.75 thr 4.380 (3/1/1) kept>=1.876 excl<=4.659
+  third body / ATR14: F1 0.73 thr 0.486 (4/3/0) kept>=0.562 excl<=2.449
+  mid range / max range prev 10: F1 0.73 thr 0.807 (4/3/0) kept>=0.837 excl<=1.329
+  mid vol / avg20 >= 1.081 AND mid vol / avg all >= 2.229: F1 0.86 (3/0/1)
+  mid vol / avg20 >= 2.190 AND mid body / ATR14 >= 2.067: F1 0.86 (3/0/1)
+  mid vol / avg20 >= 2.190 AND mid body % >= 5.926: F1 0.86 (3/0/1)
