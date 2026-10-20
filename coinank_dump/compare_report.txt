@@ -1,29 +1,31 @@
 ===== 4H =====
 bars: 594, idx->time aligned: 82/82
-  source binance-futures failed: {'code': 0, 'msg': "Service unavailable from a restricted location according to 'b. Eligibility' in https://www.binance.
-candle source: binance-spot (594 candles)
-swing price = candle high/low: highs 1/42, lows 0/40
+candle source: binance-futures-archive (594 candles)
+swing price = candle high/low: highs 42/42, lows 40/40
 best swing methods (match/extra/missing):
-  pivot n=5: F1 0.96 | highs 41/0/1 | lows 36/2/4
-  pivot n=4: F1 0.90 | highs 41/5/1 | lows 37/8/3
-  pivot n=6: F1 0.83 | highs 29/0/13 | lows 31/2/9
-  pivot n=3: F1 0.79 | highs 41/14/1 | lows 38/24/2
-  pivot n=7: F1 0.78 | highs 27/0/15 | lows 27/2/13
-bearishOB: 42 | on swing candle 42 | h/l = candle h/l 0
-bullishOB: 40 | on swing candle 40 | h/l = candle h/l 0
-fvgData: 16 | standard 3-candle FVG found 0
+  pivot n=5: F1 0.99 | highs 41/0/1 | lows 39/0/1
+  pivot n=4: F1 0.92 | highs 41/5/1 | lows 39/7/1
+  pivot n=6: F1 0.85 | highs 29/0/13 | lows 32/0/8
+  pivot n=7: F1 0.80 | highs 27/0/15 | lows 28/0/12
+  pivot n=3: F1 0.79 | highs 41/15/1 | lows 39/25/1
+bearishOB: 42 | on swing candle 42 | h/l = candle h/l 42
+bullishOB: 40 | on swing candle 40 | h/l = candle h/l 40
+fvgData: 16 | standard 3-candle FVG found 16
+  ts offset from 1st candle (0/1/2): {0: 16}
+  (my dir, coinank dir): {(-1, 1): 7, (1, 0): 9}
 
 ===== 1D =====
 bars: 175, idx->time aligned: 20/20
-  source binance-futures failed: {'code': 0, 'msg': "Service unavailable from a restricted location according to 'b. Eligibility' in https://www.binance.
-candle source: binance-spot (175 candles)
-swing price = candle high/low: highs 0/10, lows 0/10
+candle source: binance-futures-archive (175 candles)
+swing price = candle high/low: highs 10/10, lows 10/10
 best swing methods (match/extra/missing):
   pivot n=5: F1 0.97 | highs 10/0/0 | lows 9/0/1
   state len=5: F1 0.92 | highs 10/0/0 | lows 8/1/2
   pivot n=6: F1 0.92 | highs 9/0/1 | lows 8/0/2
-  pivot n=4: F1 0.88 | highs 10/3/0 | lows 9/1/1
   state len=6: F1 0.86 | highs 9/0/1 | lows 7/1/3
-bearishOB: 10 | on swing candle 10 | h/l = candle h/l 0
-bullishOB: 10 | on swing candle 10 | h/l = candle h/l 0
-fvgData: 4 | standard 3-candle FVG found 0
+  pivot n=4: F1 0.86 | highs 10/3/0 | lows 9/2/1
+bearishOB: 10 | on swing candle 10 | h/l = candle h/l 10
+bullishOB: 10 | on swing candle 10 | h/l = candle h/l 10
+fvgData: 4 | standard 3-candle FVG found 4
+  ts offset from 1st candle (0/1/2): {0: 4}
+  (my dir, coinank dir): {(-1, 1): 2, (1, 0): 2}
