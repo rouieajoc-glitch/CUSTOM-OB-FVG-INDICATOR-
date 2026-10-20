@@ -201,7 +201,56 @@ def run(interval):
     breaker_block(c, d, idx_of)
     log()
 
+def pivots_edge(c, n, left_edge, right_edge):
+    highs, lows = [], []
+    N = len(c)
+    lo = 0 if left_edge else n
+    hi = N if right_edge else N - n
+    for i in range(lo, hi):
+        L = c[max(0, i - n):i]
+        R = c[i + 1:i + n + 1]
+        h, l = c[i]["h"], c[i]["l"]
+        if all(h > x["h"] for x in L) and all(h >= x["h"] for x in R):
+            highs.append(c[i]["ts"])
+        if all(l < x["l"] for x in L) and all(l <= x["l"] for x in R):
+            lows.append(c[i]["ts"])
+    return highs, lows
 
+
+def swing_block(c, d, idx_of, n=5):
+    th = {x["ts"]: x for x in d["swingHighs"]}
+    tl = {x["ts"]: x for x in d["swingLows"]}
+    log("-- swings (n=5), edge handling --")
+    best = None
+    for name, le, re_ in (("no edges", False, False), ("start edge", True, False),
+                          ("end edge", False, True), ("both edges", True, True)):
+        h, l = pivots_edge(c, n, le, re_)
+        mh, ml = in_range(h, th), in_range(l, tl)
+        tp = len(mh & set(th)) + len(ml & set(tl))
+        fp = len(mh - set(th)) + len(ml - set(tl))
+        fn = len(set(th) - mh) + len(set(tl) - ml)
+        log(f"  {name}: {tp}/{fp}/{fn}")
+        if best is None or f1(tp, fp, fn) > best[0]:
+            best = (f1(tp, fp, fn), le, re_)
+    h, l = pivots_edge(c, n, best[1], best[2])
+    mh, ml = in_range(h, th), in_range(l, tl)
+    last = len(c) - 1
+    for label, miss, extra, src in (
+        ("high", set(th) - mh, mh - set(th), "h"), ("low", set(tl) - ml, ml - set(tl), "l")
+    ):
+        for tag, group in (("missing", miss), ("extra", extra)):
+            for ts in sorted(group)[:4]:
+                i = idx_of[ts]
+                v = c[i][src]
+                left = [x[src] for x in c[max(0, i - n):i]]
+                right = [x[src] for x in c[i + 1:i + n + 1]]
+                if src == "h":
+                    L = max(left, default=None)
+                    R = max(right, default=None)
+                else:
+                    L = min(left, default=None)
+                    R = min(right, default=None)
+                log(f"  {tag} {label} idx {i}/{last} {v}: left {L} right {R}")
 def main():
     for iv in ("4h", "1d"):
         try:
