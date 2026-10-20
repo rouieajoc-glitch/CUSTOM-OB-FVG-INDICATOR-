@@ -1,0 +1,33 @@
+===== 4H (binance-futures-archive) | kept 16 of 109 FVGs =====
+event price == candle field at idx: {'c': 19} of 19
+event candle is a pivot with n (max) = {0: 11, 1: 5, 2: 2, 4: 1}
+  [event break close] break bar == i0+2: F1 0.43 (6/6/10)
+  [event break close] break bar == i0+1: F1 0.10 (1/3/15)
+  [event break wick] break bar == i0+2: F1 0.53 (8/6/8)
+  [event break wick] break bar == i0+3: F1 0.09 (1/6/15)
+  [event idx] event idx == i0+1: F1 0.53 (8/6/8)
+  [event idx] event idx == i0+2: F1 0.09 (1/6/15)
+  [swing point] swing idx == i0-2: F1 0.22 (3/8/13)
+  [swing point] swing idx == i0-1: F1 0.21 (3/9/13)
+  [overlaps recent OB] OB within 50 bars: F1 0.23 (9/55/7)
+  [overlaps recent OB] OB within 20 bars: F1 0.12 (4/45/12)
+  [sweep] sweep idx == i0+0: F1 0.00 (0/4/16)
+  [sweep] sweep idx == i0+1: F1 0.00 (0/9/16)
+union of best two (break bar == i0+2 + event idx == i0+1): F1 0.53 (8/6/8)
+
+===== 1D (binance-futures-archive) | kept 4 of 34 FVGs =====
+event price == candle field at idx: {'c': 4} of 4
+event candle is a pivot with n (max) = {0: 4}
+  [event break close] break bar == i0+0: F1 0.40 (1/0/3)
+  [event break close] break bar == i0+2: F1 0.29 (1/2/3)
+  [event break wick] break bar == i0+0: F1 0.40 (1/0/3)
+  [event break wick] break bar == i0+2: F1 0.25 (1/3/3)
+  [event idx] event idx == i0-1: F1 0.40 (1/0/3)
+  [event idx] event idx == i0+1: F1 0.25 (1/3/3)
+  [swing point] swing idx == i0+2 (reversed): F1 0.22 (1/4/3)
+  [swing point] swing idx == i0-3: F1 0.00 (0/0/4)
+  [overlaps recent OB] OB within 10 bars: F1 0.13 (1/10/3)
+  [overlaps recent OB] OB within 20 bars: F1 0.11 (1/13/3)
+  [sweep] sweep idx == i0+2: F1 0.40 (1/0/3)
+  [sweep] sweep idx == i0+0: F1 0.00 (0/0/4)
+union of best two (break bar == i0+0 + break bar == i0+0): F1 0.40 (1/0/3)
