@@ -1,0 +1,31 @@
+===== 4H (binance-futures-archive) | CoinAnk events 19, kept FVGs 16 =====
+structure events vs CoinAnk bos/choch (F1, tp/fp/fn, bos-vs-choch label agrees):
+  swing n=5 close: F1 0.86 (19/6/0) label 15/19
+  swing n=6 close: F1 0.67 (13/7/6) label 9/13
+  swing n=4 close: F1 0.64 (16/15/3) label 12/16
+  swing n=7 close: F1 0.63 (12/7/7) label 8/12
+  swing n=8 close: F1 0.54 (10/8/9) label 5/10
+  swing n=5 wick: F1 0.53 (14/20/5) label 10/14
+FVG at my structure break (middle candle) vs kept FVGs:
+  swing n=3 close: F1 0.64 (14/14/2)
+  swing n=4 close: F1 0.63 (13/12/3)
+  swing n=4 wick: F1 0.62 (12/11/4)
+  swing n=3 wick: F1 0.55 (13/18/3)
+  swing n=5 close: F1 0.48 (8/9/8)
+  swing n=5 wick: F1 0.46 (8/11/8)
+
+===== 1D (binance-futures-archive) | CoinAnk events 4, kept FVGs 4 =====
+structure events vs CoinAnk bos/choch (F1, tp/fp/fn, bos-vs-choch label agrees):
+  swing n=5 close: F1 0.73 (4/3/0) label 1/4
+  swing n=6 close: F1 0.67 (4/4/0) label 1/4
+  swing n=7 close: F1 0.60 (3/3/1) label 0/3
+  swing n=6 wick: F1 0.50 (3/5/1) label 0/3
+  swing n=4 close: F1 0.46 (3/6/1) label 0/3
+  swing n=5 wick: F1 0.43 (3/7/1) label 0/3
+FVG at my structure break (middle candle) vs kept FVGs:
+  swing n=28 wick: F1 0.40 (1/0/3)
+  swing n=27 wick: F1 0.40 (1/0/3)
+  swing n=26 wick: F1 0.40 (1/0/3)
+  swing n=25 wick: F1 0.40 (1/0/3)
+  swing n=24 wick: F1 0.40 (1/0/3)
+  swing n=23 wick: F1 0.40 (1/0/3)
